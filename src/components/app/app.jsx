@@ -2,8 +2,8 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 
-import { init } from '../../modules/app'
-import logo from '../../assets/imgs/logo.svg'
+import { init } from 'module/app'
+import logo from 'asset/imgs/logo.svg'
 import './app.css'
 
 class App extends Component {
