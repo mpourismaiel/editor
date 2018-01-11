@@ -4,12 +4,20 @@
   "private": true,
   "devDependencies": {
     "electron": "^1.7.9",
+    "electron-devtools-installer": "^2.2.3",
     "foreman": "^2.0.0",
-    "react-scripts": "0.8.5"
+    "react-scripts": "0.8.5",
+    "redux-logger": "^3.0.6"
   },
   "dependencies": {
+    "codemirror": "^5.33.0",
+    "moment": "^2.20.1",
     "react": "^16.1.1",
-    "react-dom": "^16.1.1"
+    "react-dom": "^16.1.1",
+    "react-jdate-picker": "^0.3.0",
+    "react-redux": "^5.0.6",
+    "redux": "^3.7.2",
+    "redux-persist": "^5.4.0"
   },
   "homepage": "./",
   "main": "src/electron-starter.js",

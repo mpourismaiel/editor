@@ -1,8 +1,16 @@
 import React, { Component } from 'react'
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
+
+import { init } from './redux/app'
 import logo from './logo.svg'
 import './App.css'
 
 class App extends Component {
+  componentDidMount() {
+    this.props.init()
+  }
+
   render() {
     return (
       <div className="App">
@@ -11,9 +19,13 @@ class App extends Component {
           <h2>Welcome to React/Electron</h2>
         </div>
         <p className="App-intro">Hello Electron!</p>
+        <p>{`App initialized: ${this.props.initialized}`}</p>
       </div>
     )
   }
 }
 
-export default App
+export default connect(
+  state => ({ initialized: state.app.initialized }),
+  dispatch => bindActionCreators({ init }, dispatch),
+)(App)
