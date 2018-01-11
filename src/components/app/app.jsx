@@ -4,7 +4,7 @@ import { bindActionCreators } from 'redux'
 
 import { init } from 'module/app'
 import logo from 'asset/imgs/logo.svg'
-import './app.css'
+import './app.scss'
 
 class App extends Component {
   componentDidMount() {

@@ -109,7 +109,14 @@ module.exports = {
       // smaller than specified limit in bytes as data URLs to avoid requests.
       // A missing `test` is equivalent to a match.
       {
-        exclude: [/\.html$/, /\.(js|jsx)$/, /\.css$/, /\.json$/, /\.svg$/],
+        exclude: [
+          /\.html$/,
+          /\.(js|jsx)$/,
+          /\.css$/,
+          /\.scss$/,
+          /\.json$/,
+          /\.svg$/,
+        ],
         loader: 'url',
         query: {
           limit: 10000,
@@ -128,6 +135,11 @@ module.exports = {
           cacheDirectory: true,
         },
       },
+      {
+        test: /\.scss$/,
+        include: paths.appSrc,
+        loaders: ['style', 'css', 'sass'],
+      },
       // "postcss" loader applies autoprefixer to our CSS.
       // "css" loader resolves paths in CSS and adds assets as dependencies.
       // "style" loader turns CSS into JS modules that inject <style> tags.
@@ -135,7 +147,7 @@ module.exports = {
       // in development "style" loader enables hot editing of CSS.
       {
         test: /\.css$/,
-        loader: 'style!css?importLoaders=1!postcss',
+        loader: 'style!css!scss?importLoaders=1!postcss',
       },
       // JSON is not enabled by default in Webpack but both Node and Browserify
       // allow it implicitly so we also enable it.
