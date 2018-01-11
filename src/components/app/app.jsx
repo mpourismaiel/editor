@@ -1,26 +1,43 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
+import CodeMirror from 'react-codemirror'
+
+require('codemirror/mode/markdown/markdown')
 
 import { init } from 'module/app'
-import logo from 'asset/imgs/logo.svg'
 import './app.scss'
+import './codemirrror.scss'
 
 class App extends Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      code: '# Hello World!\n\nWelcome to my new **Editor**!',
+    }
+    this.updateCode = this.updateCode.bind(this)
+  }
+
   componentDidMount() {
     this.props.init()
   }
 
+  updateCode(newCode) {
+    this.setState({
+      code: newCode,
+    })
+  }
+
   render() {
+    var options = {
+      mode: 'markdown',
+    }
     return (
-      <div className="app">
-        <div className="app-header">
-          <img src={logo} className="app-logo" alt="logo" />
-          <h2>Welcome to React/Electron</h2>
-        </div>
-        <p className="app-intro">Hello Electron!</p>
-        <p>{`app initialized: ${this.props.initialized}`}</p>
-      </div>
+      <CodeMirror
+        value={this.state.code}
+        onChange={this.updateCode}
+        options={options}
+      />
     )
   }
 }

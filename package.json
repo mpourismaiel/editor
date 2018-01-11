@@ -53,9 +53,9 @@
     "whatwg-fetch": "1.0.0"
   },
   "dependencies": {
-    "codemirror": "^5.33.0",
     "moment": "^2.20.1",
     "react": "^16.1.1",
+    "react-codemirror": "^1.0.0",
     "react-dom": "^16.1.1",
     "react-jdate-picker": "^0.3.0",
     "react-redux": "^5.0.6",
