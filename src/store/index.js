@@ -1,6 +1,7 @@
 import { createLogger } from 'redux-logger'
 import { applyMiddleware, createStore, compose } from 'redux'
-import reducers from '../redux'
+
+import reducers from '../modules'
 
 const logger = createLogger({
   collapsed: true,

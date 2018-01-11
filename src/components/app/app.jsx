@@ -2,9 +2,9 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 
-import { init } from './redux/app'
-import logo from './logo.svg'
-import './App.css'
+import { init } from '../../modules/app'
+import logo from '../../assets/imgs/logo.svg'
+import './app.css'
 
 class App extends Component {
   componentDidMount() {
@@ -13,13 +13,13 @@ class App extends Component {
 
   render() {
     return (
-      <div className="App">
-        <div className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
+      <div className="app">
+        <div className="app-header">
+          <img src={logo} className="app-logo" alt="logo" />
           <h2>Welcome to React/Electron</h2>
         </div>
-        <p className="App-intro">Hello Electron!</p>
-        <p>{`App initialized: ${this.props.initialized}`}</p>
+        <p className="app-intro">Hello Electron!</p>
+        <p>{`app initialized: ${this.props.initialized}`}</p>
       </div>
     )
   }
