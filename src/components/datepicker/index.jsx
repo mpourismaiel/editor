@@ -4,6 +4,7 @@ import classNames from 'classnames'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { Calendar } from 'react-jdate-picker'
+import { Maximize2 } from 'react-feather'
 
 import { changeDate, changeMonth, toggleDatepicker } from 'module/app'
 import Box from 'component/common/box'
@@ -40,6 +41,7 @@ class DatePicker extends React.Component {
   }
 
   changeMonth(activeMonth) {
+    this.props.changeMonth(activeMonth)
     this.setState({ activeMonth })
   }
 
@@ -71,7 +73,7 @@ class DatePicker extends React.Component {
   render() {
     return (
       <div
-        onClick={this.props.toggleDatepicker}
+        onClick={this.props.open ? this.props.toggleDatepicker : () => null}
         className={classNames('datepicker-container', {
           open: this.props.open,
         })}>
@@ -83,6 +85,14 @@ class DatePicker extends React.Component {
               displayList={this.props.open}
               toggleDatepicker={this.props.toggleDatepicker}
             />
+            <span
+              className="go-today"
+              onClick={e => {
+                e.stopPropagation()
+                this.goToday()
+              }}>
+              Today
+            </span>
             {!this.props.open && (
               <span
                 className="expand"
@@ -90,12 +100,11 @@ class DatePicker extends React.Component {
                   e.stopPropagation()
                   this.props.toggleDatepicker()
                 }}>
-                {'<>'}
+                <Maximize2
+                  style={{ width: '16px', transform: 'translateY(-3px)' }}
+                />
               </span>
             )}
-            <span className="go-today" onClick={() => this.goToday()}>
-              Today
-            </span>
           </Box>
           <Calendar
             isSelectable={date =>
