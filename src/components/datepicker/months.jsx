@@ -4,7 +4,12 @@ import classNames from 'classnames'
 
 import Box from 'component/common/box'
 
-const Months = ({ activeMonth, changeMonth, displayList }) => {
+const Months = ({
+  activeMonth,
+  changeMonth,
+  displayList,
+  toggleDatepicker,
+}) => {
   const months = []
   const monthsToShow = displayList ? 7 : 1
   const activeMonthIndex = Math.floor(monthsToShow / 2)
@@ -22,7 +27,13 @@ const Months = ({ activeMonth, changeMonth, displayList }) => {
   return (
     <Box flexRow className="months-container" justifyContent="space-between">
       {!displayList && (
-        <Box flexColumn className="change-month">
+        <Box
+          flexColumn
+          onClick={e => {
+            e.stopPropagation()
+            changeMonth(moment(activeMonth).subtract(1, 'month'))
+          }}
+          className="change-month">
           {'<'}
         </Box>
       )}
@@ -32,7 +43,10 @@ const Months = ({ activeMonth, changeMonth, displayList }) => {
           justifyContent="center"
           alignItems="center"
           className={classNames('month', { active: i === activeMonthIndex })}
-          onClick={() => changeMonth(month)}
+          onClick={e => {
+            e.stopPropagation()
+            changeMonth(month)
+          }}
           key={i}>
           {i === activeMonthIndex ? (
             <Box flexColumn justifyContent="center" alignItems="center">
@@ -45,7 +59,13 @@ const Months = ({ activeMonth, changeMonth, displayList }) => {
         </Box>
       ))}
       {!displayList && (
-        <Box flexColumn className="change-month">
+        <Box
+          flexColumn
+          onClick={e => {
+            e.stopPropagation()
+            changeMonth(moment(activeMonth).add(1, 'month'))
+          }}
+          className="change-month">
           {'>'}
         </Box>
       )}

@@ -6,7 +6,6 @@ $calendarExpandedHeight: 600px;
   display: flex;
   justify-content: center;
   align-items: center;
-  transition: all 0.5s ease-out;
   width: $calendarWidth;
   height: #{$calendarHeight + 32px};
   margin: 0 8px 8px;
@@ -14,17 +13,21 @@ $calendarExpandedHeight: 600px;
     background-color: rgba(244, 244, 246, 0.8);
     width: 100vw;
     height: 100vh;
+    top: 0;
+    left: 0;
     position: fixed;
     overflow-x: hidden;
     overflow-y: auto;
     margin: 0;
+    z-index: 100;
   }
   .month-picker {
     background: linear-gradient(to bottom right, #fc5677 0%, #f52d55 100%);
     border-radius: 5px 5px 0 0;
-    width: $calendarWidth;
+    width: $calendarExpandedWidth;
     height: 64px;
-    .go-today {
+    .go-today,
+    .expand {
       border: 1px solid #f2afca;
       color: white;
       border-radius: 5px;
@@ -34,6 +37,10 @@ $calendarExpandedHeight: 600px;
       margin: 16px;
       cursor: pointer;
       width: 62px;
+    }
+    .expand {
+      margin: 4px 0 4px 8px;
+      padding: 2px 0;
     }
     .change-month {
       width: 24px;
@@ -91,8 +98,8 @@ $calendarExpandedHeight: 600px;
       border-radius: 0 0 5px 5px;
       display: flex;
       flex-direction: column;
-      height: $calendarHeight;
-      width: $calendarWidth;
+      height: $calendarExpandedHeight;
+      width: $calendarExpandedWidth;
     }
     &-week {
       display: flex;
@@ -108,7 +115,7 @@ $calendarExpandedHeight: 600px;
     &-day,
     &-week-day {
       display: flex;
-      flex: 1 0 #{$calendarWidth / 7};
+      flex: 1 0 #{$calendarExpandedWidth / 7};
       flex-direction: column;
       border-right: 1px solid #f7f7f7;
       box-sizing: border-box;
@@ -182,10 +189,10 @@ $calendarExpandedHeight: 600px;
       justify-content: initial !important;
     }
     .month-picker {
-      transition: all 0.5s ease-out;
+      width: $calendarWidth;
       height: 32px;
       .go-today {
-        margin: 4px 16px;
+        margin: 4px 16px 4px 4px;
         padding: 2px 8px;
       }
       .col {
@@ -199,6 +206,8 @@ $calendarExpandedHeight: 600px;
     .calendar {
       &-month {
         border-radius: 0;
+        height: $calendarHeight;
+        width: $calendarWidth;
       }
       &-week {
         flex-basis: auto;
@@ -209,16 +218,22 @@ $calendarExpandedHeight: 600px;
       &-day,
       &-week-day {
         font-size: 14px;
+        flex-basis: #{$calendarWidth / 7};
       }
-      &-day.selected {
-        .day-box {
-          top: 0;
-          left: 0;
-          width: 100%;
-          height: 100%;
-        }
+      &-day {
         .day-title {
-          font-size: 14px;
+          padding: 12px 0 12px 12px;
+        }
+        &.selected {
+          .day-box {
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+          }
+          .day-title {
+            font-size: 14px;
+          }
         }
       }
     }

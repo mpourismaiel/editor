@@ -1,5 +1,4 @@
 import React from 'react'
-import moment from 'moment'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 
@@ -9,12 +8,6 @@ import Notes from 'component/notes'
 import './app.scss'
 
 class App extends React.Component {
-  constructor(props) {
-    super(props)
-
-    this.state = { datepickerOpen: false }
-  }
-
   render() {
     return (
       <Box flexRow className="viewport">
@@ -23,14 +16,20 @@ class App extends React.Component {
             <h1 className="logo">The Journal</h1>
             <Notes />
           </Box>
-          <DatePicker open={this.state.datepickerOpen} />
+          <DatePicker />
         </Box>
+        <div hidden={!this.props.open}>
+          <DatePicker open={this.props.open} />
+        </div>
       </Box>
     )
   }
 }
 
 export default connect(
-  state => ({}),
+  state => ({
+    open: state.app.datepickerOpen,
+    selectedDate: state.app.activeDate,
+  }),
   dispatch => bindActionCreators({}, dispatch),
 )(App)

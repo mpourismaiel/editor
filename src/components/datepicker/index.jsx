@@ -5,6 +5,7 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { Calendar } from 'react-jdate-picker'
 
+import { changeDate, changeMonth, toggleDatepicker } from 'module/app'
 import Box from 'component/common/box'
 import Months from './months'
 import './datepicker.scss'
@@ -15,17 +16,27 @@ class DatePicker extends React.Component {
   constructor(props) {
     super(props)
 
-    this.state = { activeMonth: moment(), selectedDate: moment() }
+    this.state = {
+      selectedDate: this.props.selectedDate,
+    }
   }
 
-  changeDisplay(fn) {
-    this.setState({
-      activeMonth: moment(this.state.activeMonth)[fn](1, 'month'),
-    })
+  componentWillReceiveProps(nextProps) {
+    if (!nextProps.selectedDate.isSame(this.state.selectedDate)) {
+      this.setState({ selectedDate: nextProps.selectedDate })
+    }
   }
 
   selectDate(selectedDate) {
-    this.setState({ selectedDate })
+    if (this.props.open && this.state.selectedDate.isSame(selectedDate)) {
+      this.props.changeDate(selectedDate)
+      this.props.toggleDatepicker()
+    } else if (!this.props.open) {
+      this.props.changeDate(selectedDate)
+      this.setState({ selectedDate })
+    } else {
+      this.setState({ selectedDate })
+    }
   }
 
   changeMonth(activeMonth) {
@@ -42,10 +53,13 @@ class DatePicker extends React.Component {
     return (
       <div
         className={classNames('calendar-day', {
-          disabled: !date.isSame(this.state.activeMonth, 'month'),
+          disabled: !date.isSame(this.props.activeMonth, 'month'),
           selected: isSelected,
         })}
-        onClick={onClick}
+        onClick={e => {
+          e.stopPropagation()
+          onClick()
+        }}
         key={date.format('MM-DD')}>
         <div className="day-box">
           <div className="day-title">{moment(date).format('DD')}</div>
@@ -57,26 +71,38 @@ class DatePicker extends React.Component {
   render() {
     return (
       <div
+        onClick={this.props.toggleDatepicker}
         className={classNames('datepicker-container', {
           open: this.props.open,
         })}>
         <Box flexColumn>
           <Box flexRow className="month-picker">
             <Months
-              activeMonth={this.state.activeMonth.format('YYYY-MM-DD')}
-              changeMonth={date => this.changeMonth(date)}
+              activeMonth={this.props.activeMonth.format('YYYY-MM-DD')}
+              changeMonth={date => this.props.changeMonth(date)}
               displayList={this.props.open}
+              toggleDatepicker={this.props.toggleDatepicker}
             />
+            {!this.props.open && (
+              <span
+                className="expand"
+                onClick={e => {
+                  e.stopPropagation()
+                  this.props.toggleDatepicker()
+                }}>
+                {'<>'}
+              </span>
+            )}
             <span className="go-today" onClick={() => this.goToday()}>
               Today
             </span>
           </Box>
           <Calendar
             isSelectable={date =>
-              moment(date).isSameOrBefore(this.state.activeMonth)
+              moment(date).isSameOrBefore(this.props.activeMonth)
             }
             isSelected={() => false}
-            displayDate={this.state.activeMonth}
+            displayDate={this.props.activeMonth}
             changeDisplay={fn => this.changeDisplay(fn)}
             selectDate={date => this.selectDate(date)}
             dayTemplate={(date, onClick) => this.renderDay(date, onClick)}
@@ -89,6 +115,10 @@ class DatePicker extends React.Component {
 }
 
 export default connect(
-  state => ({}),
-  dispatch => bindActionCreators({}, dispatch),
+  state => ({
+    selectedDate: state.app.activeDate,
+    activeMonth: state.app.activeMonth,
+  }),
+  dispatch =>
+    bindActionCreators({ changeDate, changeMonth, toggleDatepicker }, dispatch),
 )(DatePicker)
