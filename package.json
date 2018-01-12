@@ -53,6 +53,7 @@
     "whatwg-fetch": "1.0.0"
   },
   "dependencies": {
+    "classnames": "^2.2.5",
     "moment": "^2.20.1",
     "react": "^16.1.1",
     "react-codemirror": "^1.0.0",
