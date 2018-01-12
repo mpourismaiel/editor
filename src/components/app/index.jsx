@@ -5,6 +5,7 @@ import { bindActionCreators } from 'redux'
 import DatePicker from 'component/datepicker'
 import Box from 'component/common/box'
 import Notes from 'component/notes'
+import Editor from 'component/editor'
 import './app.scss'
 
 class App extends React.Component {
@@ -17,6 +18,9 @@ class App extends React.Component {
             <Notes />
           </Box>
           <DatePicker />
+        </Box>
+        <Box flexRow flexGrow={1} justifyContent="center">
+          <Editor key={this.props.selectedDate} />
         </Box>
         <div hidden={!this.props.open}>
           <DatePicker open={this.props.open} />
