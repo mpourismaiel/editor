@@ -11,8 +11,10 @@ $calendarHeight: 600px;
   justify-content: center;
   align-items: center;
   .month-picker {
-    background: linear-gradient(to bottom, #fc4e71 0%, #ec1943 100%);
-    border-radius: 5px 0 0 5px;
+    background: linear-gradient(to bottom right, #fc5677 0%, #f52d55 100%);
+    border-radius: 5px 5px 0 0;
+    width: $calendarWidth;
+    height: 64px;
     .go-today {
       border: 1px solid #f2afca;
       color: white;
@@ -22,11 +24,12 @@ $calendarHeight: 600px;
       text-align: center;
       margin: 16px;
       cursor: pointer;
+      width: 62px;
     }
     .months-container {
       height: 100%;
+      width: calc(100% - 62px);
       box-sizing: border-box;
-      padding: 24px 0;
       font-weight: bold;
       .month {
         padding: 16px 0;
@@ -53,13 +56,13 @@ $calendarHeight: 600px;
         &.active {
           padding: 16px 8px;
           background-color: rgba(255, 255, 255, 0.2);
-          text-align: right;
+          .col {
+            width: 100%;
+          }
         }
         .year {
           color: rgba(255, 255, 255, 0.4);
-          padding-right: 5px;
           font-size: 20px;
-          text-align: left;
         }
       }
     }
@@ -68,11 +71,11 @@ $calendarHeight: 600px;
     &-month {
       background-color: white;
       border: 1px solid #f7f7f7;
-      border-radius: 0 5px 5px 0;
+      border-radius: 0 0 5px 5px;
       display: flex;
       flex-direction: column;
       height: $calendarHeight;
-      width: calc(#{$calendarWidth} - 100px);
+      width: $calendarWidth;
     }
     &-week {
       display: flex;
@@ -97,7 +100,7 @@ $calendarHeight: 600px;
     &-day,
     &-week-day {
       display: flex;
-      flex: 1 0 calc(#{$calendarWidth / 7} - #{100px / 7});
+      flex: 1 0 #{$calendarWidth / 7};
       flex-direction: column;
       border-right: 1px solid #f7f7f7;
       box-sizing: border-box;

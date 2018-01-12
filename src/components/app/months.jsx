@@ -20,15 +20,17 @@ const Months = ({ activeMonth, changeMonth }) => {
   }
 
   return (
-    <Box flexColumn className="months-container" justifyContent="space-between">
+    <Box flexRow className="months-container" justifyContent="space-between">
       {months.map((month, i) => (
         <Box
-          flexColumn
+          flexRow
+          justifyContent="center"
+          alignItems="center"
           className={classNames('month', { active: i === activeMonthIndex })}
           onClick={() => changeMonth(month)}
           key={i}>
           {i === activeMonthIndex ? (
-            <Box flexRow justifyContent="space-between" alignItems="baseline">
+            <Box flexColumn justifyContent="center" alignItems="center">
               <span className="year">{month.format('YYYY')}</span>
               <span className="active-month">{month.format('MMM')}</span>
             </Box>

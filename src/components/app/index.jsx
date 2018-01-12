@@ -58,15 +58,15 @@ class App extends React.Component {
   render() {
     return (
       <div className="datepicker-container">
-        <Box flexRow>
-          <Box flexColumn className="month-picker">
-            <span className="go-today" onClick={() => this.goToday()}>
-              Today
-            </span>
+        <Box flexColumn>
+          <Box flexRow className="month-picker">
             <Months
               activeMonth={this.state.activeMonth.format('YYYY-MM-DD')}
               changeMonth={date => this.changeMonth(date)}
             />
+            <span className="go-today" onClick={() => this.goToday()}>
+              Today
+            </span>
           </Box>
           <Calendar
             isSelectable={date =>
