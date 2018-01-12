@@ -16,23 +16,41 @@ class App extends React.Component {
   constructor(props) {
     super(props)
 
-    this.state = { activeMonth: moment() }
-    this.changeMonth = this.changeMonth.bind(this)
-    this.renderDay = this.renderDay.bind(this)
+    this.state = { activeMonth: moment(), selectedDate: moment() }
+  }
+
+  changeDisplay(fn) {
+    this.setState({
+      activeMonth: moment(this.state.activeMonth)[fn](1, 'month'),
+    })
+  }
+
+  selectDate(selectedDate) {
+    this.setState({ selectedDate })
   }
 
   changeMonth(activeMonth) {
     this.setState({ activeMonth })
   }
 
-  renderDay(date) {
+  goToday() {
+    this.changeMonth(moment())
+    this.selectDate(moment())
+  }
+
+  renderDay(date, onClick) {
+    const isSelected = date.isSame(this.state.selectedDate, 'day')
     return (
       <div
         className={classNames('calendar-day', {
           disabled: !date.isSame(this.state.activeMonth, 'month'),
+          selected: isSelected,
         })}
+        onClick={onClick}
         key={date.format('MM-DD')}>
-        <div className="day-title">{moment(date).format('DD')}</div>
+        <div className="day-box">
+          <div className="day-title">{moment(date).format('DD')}</div>
+        </div>
       </div>
     )
   }
@@ -42,14 +60,12 @@ class App extends React.Component {
       <div className="datepicker-container">
         <Box flexRow>
           <Box flexColumn className="month-picker">
-            <span
-              className="go-today"
-              onClick={() => this.changeMonth(moment())}>
+            <span className="go-today" onClick={() => this.goToday()}>
               Today
             </span>
             <Months
               activeMonth={this.state.activeMonth.format('YYYY-MM-DD')}
-              changeMonth={this.changeMonth}
+              changeMonth={date => this.changeMonth(date)}
             />
           </Box>
           <Calendar
@@ -58,9 +74,9 @@ class App extends React.Component {
             }
             isSelected={() => false}
             displayDate={this.state.activeMonth}
-            changeDisplay={() => null}
-            selectDate={() => null}
-            dayTemplate={this.renderDay}
+            changeDisplay={fn => this.changeDisplay(fn)}
+            selectDate={date => this.selectDate(date)}
+            dayTemplate={(date, onClick) => this.renderDay(date, onClick)}
             weekdays={App.WEEKDAYS}
           />
         </Box>
