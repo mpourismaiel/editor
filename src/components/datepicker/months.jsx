@@ -4,12 +4,12 @@ import classNames from 'classnames'
 
 import Box from 'component/common/box'
 
-const Months = ({ activeMonth, changeMonth }) => {
+const Months = ({ activeMonth, changeMonth, displayList }) => {
   const months = []
-  const monthsToShow = 7
+  const monthsToShow = displayList ? 7 : 1
   const activeMonthIndex = Math.floor(monthsToShow / 2)
 
-  for (let i = 0; i < 7; i++) {
+  for (let i = 0; i < monthsToShow; i++) {
     if (i < activeMonthIndex) {
       months.push(moment(activeMonth).subtract(activeMonthIndex - i, 'month'))
     } else if (i > activeMonthIndex) {
@@ -21,6 +21,11 @@ const Months = ({ activeMonth, changeMonth }) => {
 
   return (
     <Box flexRow className="months-container" justifyContent="space-between">
+      {!displayList && (
+        <Box flexColumn className="change-month">
+          {'<'}
+        </Box>
+      )}
       {months.map((month, i) => (
         <Box
           flexRow
@@ -39,6 +44,11 @@ const Months = ({ activeMonth, changeMonth }) => {
           )}
         </Box>
       ))}
+      {!displayList && (
+        <Box flexColumn className="change-month">
+          {'>'}
+        </Box>
+      )}
     </Box>
   )
 }

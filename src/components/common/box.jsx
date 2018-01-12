@@ -12,6 +12,7 @@ const Box = ({
   flexGrow,
   justifyContent,
   alignItems,
+  alignSelf,
   children,
   style,
   ...props
@@ -27,6 +28,7 @@ const Box = ({
       flexGrow,
       justifyContent,
       alignItems,
+      alignSelf,
       ...(style || {}),
     }}
     {...props}>

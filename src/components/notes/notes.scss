@@ -1,0 +1,20 @@
+.notes {
+  &-list {
+    padding: 16px 0 0 16px;
+    box-sizing: border-box;
+  }
+  &-journal,
+  &-entry {
+    font-weight: bold;
+    padding: 16px;
+    border-radius: 3px 0 0 3px;
+    color: #7d8c98;
+  }
+  &-journal {
+    font-size: 18px;
+    background-color: white;
+  }
+  &-entry {
+    font-size: 16px;
+  }
+}
