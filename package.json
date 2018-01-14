@@ -54,15 +54,19 @@
   },
   "dependencies": {
     "classnames": "^2.2.5",
+    "draft-js": "^0.10.4",
+    "draft-js-markdown-shortcuts-plugin": "^0.3.0",
+    "draft-js-plugins-editor": "^2.0.4",
+    "lodash": "^4.17.4",
     "moment": "^2.20.1",
     "react": "^16.1.1",
-    "react-codemirror": "^1.0.0",
     "react-dom": "^16.1.1",
     "react-feather": "^1.0.8",
     "react-jdate-picker": "^0.3.0",
     "react-redux": "^5.0.6",
     "redux": "^3.7.2",
-    "redux-persist": "^5.4.0"
+    "redux-persist": "^5.4.0",
+    "redux-utility-belt": "^1.0.0"
   },
   "homepage": "./",
   "main": "src/electron-starter.js",

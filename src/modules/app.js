@@ -1,5 +1,5 @@
 import moment from 'moment'
-import { createAction, createReducer } from '../utils/redux-helpers'
+import { createAction, createReducer } from 'redux-utility-belt'
 
 export const DATEPICKER_TOGGLE = 'EDITOR/DATEPICKER/TOGGLE'
 export const DATEPICKER_DATE_CHANGE = 'EDITOR/DATEPICKER/DATE/CHANGE'
