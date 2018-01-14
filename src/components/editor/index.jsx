@@ -1,6 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
+import moment from 'moment'
 import Editor from 'draft-js-plugins-editor'
 import createMarkdownShortcutsPlugin from 'draft-js-markdown-shortcuts-plugin'
 import { EditorState, convertToRaw, convertFromRaw } from 'draft-js'
@@ -22,7 +23,7 @@ class EditorContainer extends React.Component {
   constructor(props) {
     super(props)
 
-    const date = props.date.format('YYYY-MM-DD')
+    const date = moment(props.date).format('YYYY-MM-DD')
     const content = props.contents[date]
     this.state = {
       editorState: content
@@ -52,7 +53,7 @@ class EditorContainer extends React.Component {
   }
 
   render() {
-    const date = this.props.date.format('YYYY-MM-DD')
+    const date = moment(this.props.date).format('YYYY-MM-DD')
 
     return (
       <Box flexColumn flexGrow={1} className="editor-container">

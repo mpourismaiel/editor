@@ -80,7 +80,7 @@ class DatePicker extends React.Component {
         <Box flexColumn>
           <Box flexRow className="month-picker">
             <Months
-              activeMonth={this.props.activeMonth.format('YYYY-MM-DD')}
+              activeMonth={moment(this.props.activeMonth).format('YYYY-MM-DD')}
               changeMonth={date => this.props.changeMonth(date)}
               displayList={this.props.open}
               toggleDatepicker={this.props.toggleDatepicker}

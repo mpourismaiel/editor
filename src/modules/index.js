@@ -1,9 +1,15 @@
-import { combineReducers } from 'redux'
+import { persistCombineReducers } from 'redux-persist'
+import storage from 'redux-persist/lib/storage'
 
 import { reducer as app } from './app'
 import { reducer as editor } from './editor'
 
-export default combineReducers({
+const config = {
+  key: 'root',
+  storage,
+}
+
+export default persistCombineReducers(config, {
   app,
   editor,
 })
