@@ -7,6 +7,7 @@ import { reducer as editor } from './editor'
 const config = {
   key: 'root',
   storage,
+  whitelist: ['editor'],
 }
 
 export default persistCombineReducers(config, {
