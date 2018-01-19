@@ -4,8 +4,9 @@ import { bindActionCreators } from 'redux'
 import moment from 'moment'
 import Editor from 'draft-js-plugins-editor'
 import createMarkdownShortcutsPlugin from 'draft-js-markdown-shortcuts-plugin'
-import { EditorState, convertToRaw, convertFromRaw } from 'draft-js'
+import { EditorState, convertToRaw, convertFromRaw, RichUtils } from 'draft-js'
 import debounce from 'lodash/debounce'
+import { Bold, Italic, Underline } from 'react-feather'
 
 import { addEntry, updateContent } from 'module/editor'
 import Box from 'component/common/box'
@@ -52,6 +53,18 @@ class EditorContainer extends React.Component {
     this.refs.editor.focus()
   }
 
+  toggleInlineStyle = (style) => e => {
+    e.preventDefault()
+    this.onChange(RichUtils.toggleInlineStyle(this.state.editorState, style))
+    this.refs.editor.focus();
+  }
+
+  toggleBlockType = (style) => e => {
+    e.preventDefault()
+    this.onChange(RichUtils.toggleBlockType(this.state.editorState, style))
+    this.refs.editor.focus();
+  }
+
   render() {
     const date = moment(this.props.date).format('YYYY-MM-DD')
 
@@ -60,6 +73,19 @@ class EditorContainer extends React.Component {
         <h1 className="editor-title">
           {this.props.contents[date] && this.props.contents[date].title}
         </h1>
+        <Box flexRow>
+          <div className="button-group">
+            <button className="editor-action bold" onMouseDown={this.toggleInlineStyle('BOLD')}>B</button>
+            <button className="editor-action italic" onMouseDown={this.toggleInlineStyle('ITALIC')}>I</button>
+            <button className="editor-action underline" onMouseDown={this.toggleInlineStyle('UNDERLINE')}>U</button>
+          </div>
+          <span className="separator"></span>
+          <div className="button-group">
+            <button className="editor-action" onMouseDown={this.toggleBlockType('header-one')}>H1</button>
+            <button className="editor-action" onMouseDown={this.toggleBlockType('header-two')}>H2</button>
+            <button className="editor-action" onMouseDown={this.toggleBlockType('header-three')}>H3</button>
+          </div>
+        </Box>
         <Box
           flexColumn
           flexGrow={1}

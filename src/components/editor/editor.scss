@@ -1,6 +1,25 @@
 .editor {
   &-container {
     padding: 16px;
+    .separator {
+      margin: 0 4px;
+    }
+    .button-group {
+      border: 1px solid rgba(0, 0, 0, 0.2);
+      border-radius: 3px;
+      button {
+        background: transparent;
+        font-size: 16px;
+        border-radius: 0;
+        border: none;
+        border-right: 1px solid rgba(0, 0, 0, 0.2);
+        width: 32px;
+        height: 32px;
+        &:last-child {
+          border-right: none;
+        }
+      }
+    }
   }
   &-title {
     padding-bottom: 8px;
@@ -8,11 +27,39 @@
     border-bottom: 1px solid rgba(0, 0, 0, 0.2);
   }
   &-wrapper {
+    cursor: text;
+    margin-top: 16px;
     .public-DraftEditorPlaceholder-root {
       position: absolute;
     }
     .DraftEditor-root {
       font-size: 16px;
+      padding-left: 24px;
+      h1,
+      h2,
+      h3 {
+        position: relative;
+      }
+      h1:before {
+        content: 'H1';
+        @extend %content-before;
+      }
+      h2:before {
+        content: 'H2';
+        @extend %content-before;
+      }
+      h3:before {
+        content: 'H3';
+        @extend %content-before;
+      }
     }
   }
+}
+
+%content-before {
+  position: absolute;
+  color: rgba(0, 0, 0, 0.2);
+  font-size: 16px;
+  font-weight: bold;
+  left: -24px;
 }
