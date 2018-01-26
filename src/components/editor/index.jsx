@@ -9,43 +9,46 @@ import debounce from 'lodash/debounce'
 
 import { addEntry, updateContent } from 'module/editor'
 import Box from 'component/common/box'
-import Transaction, { Price } from 'component/editor/transaction'
+import { Hashtag, Mention, Price } from 'component/editor/transaction'
 
 import './editor.scss'
 
 function findWithRegex(regex, contentBlock, callback) {
-  const text = contentBlock.getText()
+  const initText = contentBlock.getText()
+  let text = initText
   let matchArr = regex.exec(text)
   let start = 0
   let prevLength = 0
   while (matchArr !== null) {
     prevLength = matchArr[0].length
-    start = matchArr.index
+    start = initText.length - text.length + matchArr.index
     callback(start, start + matchArr[0].length)
-    matchArr = regex.exec(text.slice(prevLength))
+    text = initText.slice(start + prevLength)
+    matchArr = regex.exec(text)
   }
 }
 
 const plugins = [
   createMarkdownShortcutsPlugin(),
   {
-    // blockRendererFn(contentBlock) {
-    //   const text = contentBlock.getText()
-
-    //   if (text.match(/^(\-|\+)\d+[a-zA-z]*/)) {
-    //     return {
-    //       component: Transaction,
-    //       editable: true,
-    //       props: {},
-    //     }
-    //   }
-    // },
     decorators: [
       {
         strategy(contentBlock, callback, contentState) {
           findWithRegex(/^(\-|\+)\d+[a-zA-z]*/, contentBlock, callback)
         },
         component: Price,
+      },
+      {
+        strategy(contentBlock, callback, contentState) {
+          findWithRegex(/\B(\#[a-zA-Z]+\b)(?!;)/, contentBlock, callback)
+        },
+        component: Hashtag,
+      },
+      {
+        strategy(contentBlock, callback, contentState) {
+          findWithRegex(/@\w+/, contentBlock, callback)
+        },
+        component: Mention,
       },
     ],
   },

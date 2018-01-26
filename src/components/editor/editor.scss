@@ -54,6 +54,21 @@
       }
       .price {
         font-weight: bold;
+        font-family: 'Inconsolata';
+        margin: 5px 0;
+        display: inline-block;
+      }
+      .hashtag {
+        background-color: #1689b9;
+        padding: 2px 5px;
+        border-radius: 5px;
+        color: white;
+      }
+      .mention {
+        color: white;
+        background-color: #ff80a0;
+        padding: 2px 5px;
+        border-radius: 5px;
       }
     }
   }
