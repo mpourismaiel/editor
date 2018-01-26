@@ -64,6 +64,7 @@
     "react-feather": "^1.0.8",
     "react-jdate-picker": "^0.3.0",
     "react-redux": "^5.0.6",
+    "recharts": "^1.0.0-beta.9",
     "redux": "^3.7.2",
     "redux-persist": "^5.4.0",
     "redux-utility-belt": "^1.0.0"

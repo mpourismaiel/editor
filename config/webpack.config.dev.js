@@ -79,7 +79,7 @@ module.exports = {
       component: paths.appSrc + '/components',
       asset: paths.appSrc + '/assets',
       module: paths.appSrc + '/modules',
-      util: paths.appSrc + '/utils',
+      utils: paths.appSrc + '/utils',
     },
   },
 

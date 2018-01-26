@@ -9,52 +9,11 @@ import debounce from 'lodash/debounce'
 
 import { addEntry, updateContent } from 'module/editor'
 import Box from 'component/common/box'
-import { Hashtag, Mention, Price } from 'component/editor/transaction'
-
+import editorTransactionPlugin from 'utils/editor-transaction-plugin'
 import './editor.scss'
 
-function findWithRegex(regex, contentBlock, callback) {
-  const initText = contentBlock.getText()
-  let text = initText
-  let matchArr = regex.exec(text)
-  let start = 0
-  let prevLength = 0
-  while (matchArr !== null) {
-    prevLength = matchArr[0].length
-    start = initText.length - text.length + matchArr.index
-    callback(start, start + matchArr[0].length)
-    text = initText.slice(start + prevLength)
-    matchArr = regex.exec(text)
-  }
-}
-
-const plugins = [
-  createMarkdownShortcutsPlugin(),
-  {
-    decorators: [
-      {
-        strategy(contentBlock, callback, contentState) {
-          findWithRegex(/^(\-|\+)\d+[a-zA-z]*/, contentBlock, callback)
-        },
-        component: Price,
-      },
-      {
-        strategy(contentBlock, callback, contentState) {
-          findWithRegex(/\B(\#[a-zA-Z]+\b)(?!;)/, contentBlock, callback)
-        },
-        component: Hashtag,
-      },
-      {
-        strategy(contentBlock, callback, contentState) {
-          findWithRegex(/@\w+/, contentBlock, callback)
-        },
-        component: Mention,
-      },
-    ],
-  },
-]
-
 class EditorContainer extends React.Component {
+  static PLUGINS = [createMarkdownShortcutsPlugin(), editorTransactionPlugin]
   static EDITOR_OPTIONS = {
     mode: 'markdown',
     placeholder: "What's on your mind?",
@@ -158,7 +117,7 @@ class EditorContainer extends React.Component {
             ref="editor"
             editorState={this.state.editorState}
             onChange={this.onChange}
-            plugins={plugins}
+            plugins={EditorContainer.PLUGINS}
             placeholder="What's on your mind?"
           />
         </Box>
