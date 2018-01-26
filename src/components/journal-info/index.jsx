@@ -4,8 +4,9 @@ import { connect } from 'react-redux'
 
 import Box from 'component/common/box'
 import { TwoLevelPieChart } from 'component/journal-info/pie-chart'
-import './journal-info.scss'
 import regexes from 'utils/regexes'
+import { formatPrice } from 'utils/price'
+import './journal-info.scss'
 
 class JournalInfo extends React.Component {
   state = {
@@ -77,10 +78,12 @@ class JournalInfo extends React.Component {
     return Object.keys(transactions).reduce((tmp, unit) => {
       tmp.push(
         <span key={unit} className="value">
-          {`${Object.keys(transactions[unit]).reduce(
-            (sum, tag) => (sum += transactions[unit][tag]),
-            0,
-          )}${unit}`}
+          {formatPrice(
+            `${Object.keys(transactions[unit]).reduce(
+              (sum, tag) => (sum += transactions[unit][tag]),
+              0,
+            )}${unit}`,
+          )}
         </span>,
       )
       return tmp

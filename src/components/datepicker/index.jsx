@@ -12,7 +12,7 @@ import Months from './months'
 import './datepicker.scss'
 
 class DatePicker extends React.Component {
-  static WEEKDAYS = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+  static WEEKDAYS = ['Sat', 'Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri']
 
   constructor(props) {
     super(props)
