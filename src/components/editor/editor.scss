@@ -52,6 +52,9 @@
         content: 'H3';
         @extend %content-before;
       }
+      .price {
+        font-weight: bold;
+      }
     }
   }
 }

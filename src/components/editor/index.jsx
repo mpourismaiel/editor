@@ -6,14 +6,50 @@ import Editor from 'draft-js-plugins-editor'
 import createMarkdownShortcutsPlugin from 'draft-js-markdown-shortcuts-plugin'
 import { EditorState, convertToRaw, convertFromRaw, RichUtils } from 'draft-js'
 import debounce from 'lodash/debounce'
-import { Bold, Italic, Underline } from 'react-feather'
 
 import { addEntry, updateContent } from 'module/editor'
 import Box from 'component/common/box'
+import Transaction, { Price } from 'component/editor/transaction'
 
 import './editor.scss'
 
-const plugins = [createMarkdownShortcutsPlugin()]
+function findWithRegex(regex, contentBlock, callback) {
+  const text = contentBlock.getText()
+  let matchArr = regex.exec(text)
+  let start = 0
+  let prevLength = 0
+  while (matchArr !== null) {
+    prevLength = matchArr[0].length
+    start = matchArr.index
+    callback(start, start + matchArr[0].length)
+    matchArr = regex.exec(text.slice(prevLength))
+  }
+}
+
+const plugins = [
+  createMarkdownShortcutsPlugin(),
+  {
+    // blockRendererFn(contentBlock) {
+    //   const text = contentBlock.getText()
+
+    //   if (text.match(/^(\-|\+)\d+[a-zA-z]*/)) {
+    //     return {
+    //       component: Transaction,
+    //       editable: true,
+    //       props: {},
+    //     }
+    //   }
+    // },
+    decorators: [
+      {
+        strategy(contentBlock, callback, contentState) {
+          findWithRegex(/^(\-|\+)\d+[a-zA-z]*/, contentBlock, callback)
+        },
+        component: Price,
+      },
+    ],
+  },
+]
 
 class EditorContainer extends React.Component {
   static EDITOR_OPTIONS = {
@@ -53,16 +89,16 @@ class EditorContainer extends React.Component {
     this.refs.editor.focus()
   }
 
-  toggleInlineStyle = (style) => e => {
+  toggleInlineStyle = style => e => {
     e.preventDefault()
     this.onChange(RichUtils.toggleInlineStyle(this.state.editorState, style))
-    this.refs.editor.focus();
+    this.refs.editor.focus()
   }
 
-  toggleBlockType = (style) => e => {
+  toggleBlockType = style => e => {
     e.preventDefault()
     this.onChange(RichUtils.toggleBlockType(this.state.editorState, style))
-    this.refs.editor.focus();
+    this.refs.editor.focus()
   }
 
   render() {
@@ -75,15 +111,39 @@ class EditorContainer extends React.Component {
         </h1>
         <Box flexRow>
           <div className="button-group">
-            <button className="editor-action bold" onMouseDown={this.toggleInlineStyle('BOLD')}>B</button>
-            <button className="editor-action italic" onMouseDown={this.toggleInlineStyle('ITALIC')}>I</button>
-            <button className="editor-action underline" onMouseDown={this.toggleInlineStyle('UNDERLINE')}>U</button>
+            <button
+              className="editor-action bold"
+              onMouseDown={this.toggleInlineStyle('BOLD')}>
+              B
+            </button>
+            <button
+              className="editor-action italic"
+              onMouseDown={this.toggleInlineStyle('ITALIC')}>
+              I
+            </button>
+            <button
+              className="editor-action underline"
+              onMouseDown={this.toggleInlineStyle('UNDERLINE')}>
+              U
+            </button>
           </div>
-          <span className="separator"></span>
+          <span className="separator" />
           <div className="button-group">
-            <button className="editor-action" onMouseDown={this.toggleBlockType('header-one')}>H1</button>
-            <button className="editor-action" onMouseDown={this.toggleBlockType('header-two')}>H2</button>
-            <button className="editor-action" onMouseDown={this.toggleBlockType('header-three')}>H3</button>
+            <button
+              className="editor-action"
+              onMouseDown={this.toggleBlockType('header-one')}>
+              H1
+            </button>
+            <button
+              className="editor-action"
+              onMouseDown={this.toggleBlockType('header-two')}>
+              H2
+            </button>
+            <button
+              className="editor-action"
+              onMouseDown={this.toggleBlockType('header-three')}>
+              H3
+            </button>
           </div>
         </Box>
         <Box

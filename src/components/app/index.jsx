@@ -6,6 +6,7 @@ import DatePicker from 'component/datepicker'
 import Box from 'component/common/box'
 import Notes from 'component/notes'
 import Editor from 'component/editor'
+import JournalInfo from 'component/journal-info'
 import './app.scss'
 
 class App extends React.Component {
@@ -20,7 +21,8 @@ class App extends React.Component {
           <DatePicker />
         </Box>
         <Box flexRow flexGrow={1} justifyContent="center">
-          <Editor key={this.props.selectedDate} />
+          <Editor key={`editor-${this.props.selectedDate}`} />
+          <JournalInfo key={`journal-${this.props.selectedDate}`} />
         </Box>
         <div hidden={!this.props.open}>
           <DatePicker open={this.props.open} />
