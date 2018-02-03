@@ -12,6 +12,12 @@ export default {
     },
     {
       strategy(contentBlock, callback, contentState) {
+        findWithRegex(regexes.priceDebt, contentBlock, callback)
+      },
+      component: Price,
+    },
+    {
+      strategy(contentBlock, callback, contentState) {
         findWithRegex(regexes.hashtag, contentBlock, callback)
       },
       component: Hashtag,
