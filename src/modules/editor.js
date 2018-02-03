@@ -7,8 +7,8 @@ export const UPDATE_CONTENT = 'EDITOR/EDITOR/CONTENT/UPDATE'
 
 export const addEntry = (title, date) =>
   createAction(ADD_ENTRY, { title, date })
-export const updateContent = (content, date) =>
-  createAction(UPDATE_CONTENT, { content, date })
+export const updateContent = (content, plainText, date) =>
+  createAction(UPDATE_CONTENT, { content, plainText, date })
 
 const format = date => moment(date).format('YYYY-MM-DD')
 
@@ -33,13 +33,15 @@ export const reducer = createReducer(
       return newState
     },
     [UPDATE_CONTENT]: (state, payload) => {
-      if (!state.date[format(payload.date)]) {
+      const date = format(payload.date)
+
+      if (!state.date[date]) {
         return state
       }
 
       const newState = { ...state }
-
-      newState.date[format(payload.date)].text = payload.content
+      newState.date[date].text = payload.content
+      newState.date[date].plainText = payload.plainText
       return newState
     },
   },

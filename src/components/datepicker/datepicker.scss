@@ -9,6 +9,7 @@ $calendarExpandedHeight: 600px;
   width: $calendarWidth;
   height: #{$calendarHeight + 32px};
   margin: 0 8px 8px;
+  flex: 0 0 auto;
   &.open {
     background-color: rgba(244, 244, 246, 0.8);
     width: 100vw;

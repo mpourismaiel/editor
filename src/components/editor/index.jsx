@@ -40,9 +40,12 @@ class EditorContainer extends React.Component {
   }
 
   onChange = editorState => {
+    const contentState = editorState.getCurrentContent()
+
     this.setState({ editorState })
     this.updateContent(
-      convertToRaw(editorState.getCurrentContent()),
+      convertToRaw(contentState),
+      contentState.getPlainText(),
       this.props.date,
     )
   }

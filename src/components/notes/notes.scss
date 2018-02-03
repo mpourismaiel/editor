@@ -1,18 +1,24 @@
 .notes {
   &-list {
-    padding: 16px 0 0 16px;
     box-sizing: border-box;
+    overflow-y: scroll;
+    width: 316px;
+    padding: 8px 0;
+    * {
+      user-select: none;
+    }
   }
-  &-journal,
   &-entry {
     font-weight: bold;
-    padding: 16px;
-    border-radius: 3px 0 0 3px;
+    padding: 8px 16px;
     color: #7d8c98;
-  }
-  &-journal {
-    font-size: 18px;
-    background-color: white;
+    flex: 0 0 auto;
+    border-bottom: 1px solid rgba(145, 163, 177, 0.3);
+    .description {
+      font-weight: normal;
+      padding-top: 8px;
+      color: rgba(125, 140, 152, 0.6);
+    }
   }
   &-entry {
     font-size: 16px;
