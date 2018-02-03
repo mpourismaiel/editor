@@ -106,23 +106,23 @@ class JournalInfo extends React.Component {
         <Box
           flexRow
           className="incomes"
-          shouldRender={!!Object.keys(todayIncomes).length}>
+          shouldRender={!!Object.keys(todayIncomes || {}).length}>
           <Box flexColumn className="title-container">
             <span className="title">Incomes</span>
           </Box>
           <Box flexColumn className="value-container">
-            {this.calculateTransactions(todayIncomes)}
+            {this.calculateTransactions(todayIncomes || {})}
           </Box>
         </Box>
         <Box
           flexRow
           className="expenses"
-          shouldRender={!!Object.keys(todayExpenses).length}>
+          shouldRender={!!Object.keys(todayExpenses || {}).length}>
           <Box flexColumn className="title-container">
             <span className="title">Expenses</span>
           </Box>
           <Box flexColumn className="value-container">
-            {this.calculateTransactions(todayExpenses)}
+            {this.calculateTransactions(todayExpenses || {})}
           </Box>
         </Box>
       </Box>

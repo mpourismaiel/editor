@@ -28,6 +28,13 @@ class DatePicker extends React.Component {
     }
   }
 
+  changeDisplay = fn => {
+    const activeMonth = moment(this.props.activeMonth)[fn](1, 'month')
+
+    this.props.changeMonth(activeMonth)
+    this.setState({ activeMonth })
+  }
+
   selectDate(selectedDate) {
     if (this.props.open && this.state.selectedDate.isSame(selectedDate)) {
       this.props.changeDate(selectedDate)
