@@ -24,10 +24,7 @@ const Box = ({
 
   return (
     <div
-      className={classNames(className, {
-        col: flexColumn,
-        row: flexRow,
-      })}
+      className={classNames(className, { col: flexColumn, row: flexRow })}
       style={{
         flex,
         flexFlow,

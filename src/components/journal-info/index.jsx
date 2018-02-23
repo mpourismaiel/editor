@@ -13,7 +13,7 @@ class JournalInfo extends React.Component {
     expenses: {},
   }
 
-  analyzeTransactions(content, type) {
+  analyzeTransactionsByTags(content, type) {
     if (content && content.text && content.text.blocks) {
       return content.text.blocks
         .filter(
@@ -74,31 +74,53 @@ class JournalInfo extends React.Component {
     })
   }
 
-  calculateTransactions(transactions) {
-    return Object.keys(transactions).reduce((tmp, unit) => {
-      tmp.push(
-        <span key={unit} className="value">
-          {formatPrice(
-            `${Object.keys(transactions[unit]).reduce(
-              (sum, tag) => (sum += transactions[unit][tag]),
-              0,
-            )}${unit}`,
-          )}
-        </span>,
-      )
-      return tmp
-    }, [])
+  analyzeTransactions(content, type) {
+    if (content && content.text && content.text.blocks) {
+      return content.text.blocks
+        .filter(
+          block =>
+            block.type === 'unstyled' &&
+            block.text.match(regexes.price) !== null &&
+            block.text[0] === (type === 'expense' ? '-' : '+'),
+        )
+        .map(block => {
+          return block.text
+        })
+        .reduce((tmp, text) => {
+          const unit = text.match(/[a-z$]+/i)
+          const key = !!unit ? unit[0] : 'default'
+
+          if (!tmp[key]) {
+            tmp[key] = 0
+          }
+
+          const price = parseInt(text.match(/\d+/)[0], 10)
+          tmp[key] += price
+          return tmp
+        }, {})
+    }
+
+    return null
+  }
+
+  calculcateTransactions(transactions) {
+    if (!transactions || !Object.keys(transactions).length) {
+      return 0
+    }
+
+    return Object.keys(transactions).reduce(
+      (sum, unit) => (sum += transactions[unit]),
+      0,
+    )
   }
 
   render() {
-    const todayExpenses = this.analyzeTransactions(
-      this.props.contents[moment(this.props.date).format('YYYY-MM-DD')],
-      'expense',
-    )
-    const todayIncomes = this.analyzeTransactions(
-      this.props.contents[moment(this.props.date).format('YYYY-MM-DD')],
-      'income',
-    )
+    const content = this.props.contents[
+      moment(this.props.date).format('YYYY-MM-DD')
+    ]
+
+    const todayExpenses = this.analyzeTransactions(content, 'expense') || {}
+    const todayIncomes = this.analyzeTransactions(content, 'income') || {}
 
     return (
       <Box flexColumn className="journal-info">
@@ -106,23 +128,37 @@ class JournalInfo extends React.Component {
         <Box
           flexRow
           className="incomes"
-          shouldRender={!!Object.keys(todayIncomes || {}).length}>
+          shouldRender={this.calculcateTransactions(todayIncomes) > 0}>
           <Box flexColumn className="title-container">
             <span className="title">Incomes</span>
           </Box>
           <Box flexColumn className="value-container">
-            {this.calculateTransactions(todayIncomes || {})}
+            {Object.keys(todayIncomes).map(
+              unit => (
+                <span key={unit} className="value">
+                  {formatPrice(`${todayIncomes[unit]}${unit}`)}
+                </span>
+              ),
+              [],
+            )}
           </Box>
         </Box>
         <Box
           flexRow
           className="expenses"
-          shouldRender={!!Object.keys(todayExpenses || {}).length}>
+          shouldRender={this.calculcateTransactions(todayExpenses) > 0}>
           <Box flexColumn className="title-container">
             <span className="title">Expenses</span>
           </Box>
           <Box flexColumn className="value-container">
-            {this.calculateTransactions(todayExpenses || {})}
+            {Object.keys(todayExpenses).map(
+              unit => (
+                <span key={unit} className="value">
+                  {formatPrice(`${todayExpenses[unit]}${unit}`)}
+                </span>
+              ),
+              [],
+            )}
           </Box>
         </Box>
       </Box>
