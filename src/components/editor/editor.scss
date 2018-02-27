@@ -1,6 +1,5 @@
 .editor {
   &-container {
-    padding: 16px;
     .separator {
       margin: 0 4px;
     }
@@ -20,11 +19,20 @@
         }
       }
     }
+
+    .draft-editor-container {
+      margin: 16px;
+    }
   }
   &-title {
-    padding-bottom: 8px;
-    margin-bottom: 16px;
+    padding: 0 16px;
+    margin: 0 0 16px;
     border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+    height: 72px;
+    box-sizing: border-box;
+    font-size: 24px;
+    display: flex;
+    align-items: center;
   }
   &-wrapper {
     cursor: text;
