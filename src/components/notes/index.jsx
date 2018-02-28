@@ -2,6 +2,7 @@ import React from 'react'
 import moment from 'moment'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
+import { Link } from 'react-router-dom'
 
 import { changeDate, changeMonth } from 'module/app'
 import Box from 'component/common/box'
@@ -22,20 +23,22 @@ class Notes extends React.Component {
         const contents = this.props.contents[date].plainText || ''
 
         return (
-          <Box
-            flexColumn
-            className="notes-entry"
-            onClick={this.selectDate(date)}>
-            <span className="title">
-              {moment(date).format('MMM DD - dddd')}
-            </span>
-            <span className="description">
-              {contents
-                .slice(0, 60)
-                .split('\u000A')
-                .join(' ')}
-            </span>
-          </Box>
+          <Link to={`/journal/${moment(date).month()}/${moment(date).date()}`}>
+            <Box
+              flexColumn
+              className="notes-entry"
+              onClick={this.selectDate(date)}>
+              <span className="title">
+                {moment(date).format('MMM DD - dddd')}
+              </span>
+              <span className="description">
+                {contents
+                  .slice(0, 60)
+                  .split('\u000A')
+                  .join(' ')}
+              </span>
+            </Box>
+          </Link>
         )
       })
   }

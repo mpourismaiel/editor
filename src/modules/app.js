@@ -6,7 +6,10 @@ export const DATEPICKER_DATE_CHANGE = 'EDITOR/DATEPICKER/DATE/CHANGE'
 export const DATEPICKER_MONTH_CHANGE = 'EDITOR/DATEPICKER/MONTH/CHANGE'
 
 export const toggleDatepicker = () => createAction(DATEPICKER_TOGGLE)
-export const changeDate = date => createAction(DATEPICKER_DATE_CHANGE, date)
+export const changeDate = date => {
+  console.trace('===========')
+  return createAction(DATEPICKER_DATE_CHANGE, date)
+}
 export const changeMonth = date => createAction(DATEPICKER_MONTH_CHANGE, date)
 
 export const reducer = createReducer(

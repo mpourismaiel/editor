@@ -71,9 +71,7 @@ class EditorContainer extends React.Component {
 
     return (
       <Box flexColumn flexGrow={1} className="editor-container">
-        <h1 className="editor-title">
-          {`Journal - ${moment(date).format('MMMM DD, dddd')}`}
-        </h1>
+        <h1 className="editor-title">{moment(date).format('MMMM DD, dddd')}</h1>
         <Box flexRow className="draft-editor-container">
           <div className="button-group">
             <button

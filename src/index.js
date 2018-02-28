@@ -22,7 +22,11 @@ ReactDOM.render(
       <Router history={history}>
         <Switch>
           <Route exact path="/" component={App} />
-          <Route exact path="/(journal|notes)" component={NotesEditor} />
+          <Route
+            exact
+            path="/(journal|notes)/:month?/:date?"
+            component={NotesEditor}
+          />
         </Switch>
       </Router>
     </PersistGate>
