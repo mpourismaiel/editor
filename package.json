@@ -1,0 +1,28 @@
+{
+  "name": "editor",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "react": "^16.4.1",
+    "react-dom": "^16.4.1",
+    "react-scripts": "1.1.4"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject"
+  },
+  "devDependencies": {
+    "awesome-typescript-loader": "^5.2.0",
+    "bootstrap": "^4.1.2",
+    "node-sass": "^4.9.2",
+    "prettier": "^1.13.7",
+    "react-slate": "^0.5.1",
+    "sass-loader": "^7.0.3",
+    "slate": "^0.34.5",
+    "tslint-config-prettier": "^1.13.0",
+    "tslint-config-standard": "^7.1.0",
+    "typescript": "^2.9.2"
+  }
+}
